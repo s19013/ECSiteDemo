@@ -25,8 +25,18 @@
             $rec = $stmt->fetch(PDO::FETCH_ASSOC);
             $pro_name  = $rec['name'];
             $pro_price = $rec['price'];
+            $pro_img_name= $rec['img'];
 
             $dbh = null;
+
+            if ($pro_img_name == '') {
+                echo "画像は表示されない";
+                $disp_img ='';
+            } else {
+                echo "画像が表示されるはず";
+                $disp_img = "<img src=../img/yasai/{$pro_img_name} >";
+            }
+
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();
@@ -36,6 +46,7 @@
         <p>商品情報参照</p>
         <p>商品名:{$pro_name}</p>
         <p>価格:{$pro_price}</p>
+        $disp_img
         <input type="button" onclick="history.back()" value = "戻る">
         EOM;
     ?>
