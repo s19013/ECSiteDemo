@@ -12,6 +12,8 @@
             $pro_code  = $_POST['code'];
             $pro_name  = $_POST['name'];
             $pro_price = $_POST['price'];
+            $pro_img_name_old= $_POST['img_name_old'];
+            $pro_img_name = $_POST['img_name'];
 
             $pro_code  = htmlspecialchars($pro_code  ,ENT_QUOTES,'UTF-8');
             $pro_name  = htmlspecialchars($pro_name ,ENT_QUOTES,'UTF-8');
@@ -22,14 +24,19 @@
             $password = '';
             $dbh = new PDO($dsn,$user,$password);
             $dbh -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-            $sql = "UPDATE mst_product SET name=?,price=? WHERE code = ?";
+            $sql = "UPDATE mst_product SET name=?,price=?,img=? WHERE code = ?";
             $stmt = $dbh -> prepare($sql);
             $data[] = $pro_name; //一番最初の?に入る
             $data[] = $pro_price; //二番目の?に入る
+            $data[] = $pro_img_name;
             $data[] = $pro_code;
             $stmt -> execute($data); //dataを?に入れる
 
             $dbh = null; //データベースから切断
+
+
+            if ($pro_img_name_old !='') {unlink("../img/yasai/{$pro_img_name_old}");}
+
             echo "修正しました";
         } catch (Exception $e) {
             echo $e;

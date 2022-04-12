@@ -25,8 +25,15 @@
             $rec = $stmt->fetch(PDO::FETCH_ASSOC);
             $pro_name  = $rec['name'];
             $pro_price = $rec['price'];
+            $pro_img_name_old = $rec['img'];
 
             $dbh = null;
+
+            if ($pro_img_name_old) {
+                $disp_img = '';
+            } else {
+                $disp_img = "<img src =./img/yasai{$pro_img_name_old} >";
+            }
         } catch (Exception $e) {
             echo $e;
             echo 'ただいま障害によりご迷惑をおかけしています｡';
@@ -37,13 +44,16 @@
         <p>商品修正</p>
         <p>商品コード</p>
         <p>{$pro_code}</p>
-        <form method="post" action="pro_edit_check.php">
+        <form method="post" action="pro_edit_check.php" enctype="multipart/form-data">
             <input type="hidden" name="code" value="{$pro_code}">
+            <input type="hidden" name="img_name_old" value="{$pro_img_name_old}">
             <p>商品名</p>
             <input type="text" name = "name" value = "{$pro_name}">
             <p>価格</p>
             <input type="number" name="price" min = "0" step="100">
             <br/>
+            <p>画像を選んでください</p>
+            <input type="file" name="img">
             <input type="button" onclick="history.back()" value = "戻る">
             <input type="submit" value="ok">
         </form>

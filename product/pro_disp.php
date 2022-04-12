@@ -29,14 +29,8 @@
 
             $dbh = null;
 
-            if ($pro_img_name == '') {
-                echo "画像は表示されない";
-                $disp_img ='';
-            } else {
-                echo "画像が表示されるはず";
-                $disp_img = "<img src=../img/yasai/{$pro_img_name} >";
-            }
-
+            if ($pro_img_name == '') {$disp_img ='';} 
+            else {$disp_img = "<img src=../img/yasai/{$pro_img_name} >";}
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();
