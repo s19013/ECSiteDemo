@@ -34,8 +34,9 @@
 
             $dbh = null; //データベースから切断
 
-
-            if ($pro_img_name_old !='') {unlink("../img/yasai/{$pro_img_name_old}");}
+            if ($pro_img_name_old != $pro_img_name) {
+                if ($pro_img_name_old !='') {unlink("../img/yasai/{$pro_img_name_old}");}
+            }
 
             echo "修正しました";
         } catch (Exception $e) {
