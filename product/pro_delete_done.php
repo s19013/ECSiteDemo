@@ -10,6 +10,7 @@
     <?php
         try {
             $pro_code  = $_POST['code'];
+            $pro_img_name = $_POST['img_name'];
 
             $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
             $user = 'root';
@@ -22,6 +23,8 @@
             $stmt -> execute($data);
 
             $dbh = null; //データベースから切断
+
+            if ($pro_img_name != '') {unlink("../img/yasai/{$pro_img_name}");}
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();

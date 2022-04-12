@@ -24,8 +24,12 @@
 
             $rec = $stmt->fetch(PDO::FETCH_ASSOC);
             $pro_name = $rec['name'];
+            $pro_img_name = $rec['img'];
 
             $dbh = null;
+
+            if ($pro_img_name == '') {$disp_img='';}
+            else { $disp_img = "<img src=../img/yasai/{$pro_img_name}>"; }
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();
@@ -37,8 +41,10 @@
         <p>{$pro_code}</p>
         <p>商品名</p>
         <p>{$pro_name}</p>
+        $disp_img
         <form method="post" action="pro_delete_done.php">
             <input type="hidden" name="code" value="{$pro_code}" >
+            <input type="hidden" name="img_name" value="{$pro_img_name}" >
             <p>この商品を削除しますか</p>
             <input type="button" onclick="history.back()" value = "戻る">
             <input type="submit" value="ok">
