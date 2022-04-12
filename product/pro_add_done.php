@@ -9,8 +9,9 @@
 <body>
     <?php
         try {
-            $pro_name  = $_POST['name'];
-            $pro_price  = $_POST['price'];
+            $pro_name     = $_POST['name'];
+            $pro_price    = $_POST['price'];
+            $pro_img_name = $_POST['img_name'];
 
             $pro_name  = htmlspecialchars($pro_name ,ENT_QUOTES,'UTF-8');
             $pro_price  = htmlspecialchars($pro_price ,ENT_QUOTES,'UTF-8');
@@ -20,10 +21,12 @@
             $password = '';
             $dbh = new PDO($dsn,$user,$password);
             $dbh -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-            $sql = "INSERT INTO `mst_product`(`name`, `price`) VALUES (?,?)";
+            $sql = "INSERT INTO mst_product(name,price,img) VALUES (?,?,?)";
+
             $stmt = $dbh -> prepare($sql);
             $data[] = $pro_name; //一番最初の?に入る
             $data[] = $pro_price; //二番目の?に入る
+            $data[] = $pro_img_name;
             $stmt -> execute($data); //dataを?に入れる
 
             $dbh = null; //データベースから切断

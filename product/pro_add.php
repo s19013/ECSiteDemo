@@ -10,11 +10,13 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Project/PHP/PHPProject.php to edi
     </head>
     <body>
         <p>商品追加</p>
-        <form method="post", action="pro_add_check.php">
+        <form method="post", action="pro_add_check.php" enctype="multipart/form-data">
             <p>商品名を入力してください</p>
             <input type="text" name="name">
             <p>価格を入力してください</p>
-            <input type="number" name="price" min = "0" step="100">
+            <input type="number" name="price" min = "0" step="1">
+            <p>画像を選んでください</p>
+            <input type="file" name="img">
             <br>
             <input type="button" onclick="history.back()" value="戻る">
             <input type="submit" value = "ok">

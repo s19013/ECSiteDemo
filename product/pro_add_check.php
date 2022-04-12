@@ -10,10 +10,12 @@
     <?php
         $pro_name  = $_POST['name'];
         $pro_price  = $_POST['price'];
+        $pro_img = $_FILES['img'];
 
         //フラグ
         $pro_name_ok  = false;
         $pro_price_ok = false;
+        $pro_img_ok   = false;
 
         $pro_name   = htmlspecialchars($pro_name  ,ENT_QUOTES,'UTF-8');
         $pro_price  = htmlspecialchars($pro_price ,ENT_QUOTES,'UTF-8');
@@ -32,11 +34,23 @@
             echo "<p>価格:{$pro_price}円</p>";
         }
 
-        if($pro_name_ok == true && $pro_price_ok == true){
+        if ($pro_img['size']>0) {
+            if ($pro_img['size'] > 10000000) { echo '画像が大きすぎます'; }
+            else {
+                move_uploaded_file($pro_img['tmp_name'],"../img/yasai/{$pro_img['name']}"); //これでサーバーに画像をアップロードするらしい
+                echo <<< EOM
+                <img src='../img/yasai/{$pro_img['name']}'> <br/>
+                EOM;
+                $pro_img_ok = true;
+            }
+        }
+
+        if($pro_name_ok == true && $pro_price_ok == true && $pro_img_ok){
             echo <<< EOM
             <form method = "post" action="pro_add_done.php">
                 <input type="hidden" name = "name" value = "{$pro_name}">
                 <input type="hidden" name = "price" value = "{$pro_price}">
+                <input type="hidden" name = "img_name" value = "{$pro_img['name']}">
                 <br/>
                 <input type="button" onclick = "history.back()" value = "戻る">
                 <input type="submit" value="ok">
