@@ -1,3 +1,14 @@
+<?php
+    session_start();
+    session_regenerate_id(true); //あとでここの1文を抜いたphp文をstaff,productにすべて貼り付ける
+    if (isset($_SESSION['login'])==false) {
+        echo "ログインされてない <br>";
+        echo "<a href=../staff_login/staff_login.php>ログイン画面へ</a>";
+        exit();
+    } else {
+        echo "{$_SESSION['staff_name']}さんログイン中 <br>";
+    }
+?>
 <!DOCTYPE html>
 <html lang="jp">
 <head>
