@@ -30,9 +30,11 @@
 
             $dbh = null; //データベースから切断
 
+            $rec = $stmt -> fetch(PDO::FETCH_ASSOC);
+
             if ($rec==false) {
-                echo <p>"スタッフコードかパスワードが間違えています"</p>
-                echo '<a href="staff_login.php"></a>'
+                echo "<p>スタッフコードかパスワードが間違えています</p>";
+                echo '<a href="staff_login.php"></a>';
             } else {
                 header('Location:staff_top.php');
                 exit();

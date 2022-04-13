@@ -12,7 +12,7 @@
         <p>スタッフコード</p>
         <input type="text" name="code">
         <p>パスワード</p>
-        <input type="text" name = "code">
+        <input type="text" name = "pass">
         <br>
         <input type="submit" value="ログイン">
     </form>
