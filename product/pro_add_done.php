@@ -1,4 +1,7 @@
 <?php
+    require_once('../common/common.php');
+?>
+<?php
     session_start();
     session_regenerate_id(true); //あとでここの1文を抜いたphp文をstaff,productにすべて貼り付ける
     if (isset($_SESSION['login'])==false) {
@@ -20,12 +23,11 @@
 <body>
     <?php
         try {
-            $pro_name     = $_POST['name'];
-            $pro_price    = $_POST['price'];
-            $pro_img_name = $_POST['img_name'];
+            $post = sanitize($_POST);
+            $pro_name     = $post['name'];
+            $pro_price    = $post['price'];
+            $pro_img_name = $post['img_name'];
 
-            $pro_name  = htmlspecialchars($pro_name ,ENT_QUOTES,'UTF-8');
-            $pro_price  = htmlspecialchars($pro_price ,ENT_QUOTES,'UTF-8');
 
             $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
             $user = 'root';

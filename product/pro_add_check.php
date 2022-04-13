@@ -1,4 +1,7 @@
 <?php
+    require_once('../common/common.php');
+?>
+<?php
     session_start();
     session_regenerate_id(true); //あとでここの1文を抜いたphp文をstaff,productにすべて貼り付ける
     if (isset($_SESSION['login'])==false) {
@@ -19,17 +22,15 @@
 </head>
 <body>
     <?php
-        $pro_name  = $_POST['name'];
-        $pro_price  = $_POST['price'];
+        $post = sanitize($_POST);
+        $pro_name  = $post['name'];
+        $pro_price  = $post['price'];
         $pro_img = $_FILES['img'];
 
         //フラグ
         $pro_name_ok  = false;
         $pro_price_ok = false;
         $pro_img_ok   = false;
-
-        $pro_name   = htmlspecialchars($pro_name  ,ENT_QUOTES,'UTF-8');
-        $pro_price  = htmlspecialchars($pro_price ,ENT_QUOTES,'UTF-8');
 
         if ($pro_name == '') { //pro_nameになにもなかった場合
             echo '<p>商品名が入力されていません</p>';
