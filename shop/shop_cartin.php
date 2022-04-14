@@ -23,10 +23,16 @@
         try {
             $pro_code = $_GET['procode'];
 
-            if (isset($_SESSION['cart']) ==true) {$cart=$_SESSION['cart'];}
+            if (isset($_SESSION['cart']) ==true) {
+                $cart=$_SESSION['cart'];
+                $pro_count=$_SESSION['pro_count'];
+            }
             $cart[]=$pro_code;
+            $pro_count[]=1;
             $_SESSION['cart']=$cart;
-            
+            $_SESSION['pro_count']=$pro_count;
+            $max=count($cart);
+
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();

@@ -23,6 +23,8 @@
         try {
             $cart=$_SESSION['cart'];
             $max=count($cart);
+            $pro_count=$_SESSION['pro_count'];
+
             $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
             $user = 'root';
             $password = '';
@@ -45,18 +47,23 @@
             $dbh = null;
 
             echo "<p>カート</p>";
-            for ($i=0; $i <$max ; $i++) {
+            echo "<form method='post' action=pro_count_change.php>";
+            for ($i=0; $i <$max; $i++) {
                 echo <<<EOM
                 <p>商品名:{$pro_name[$i]}</p>
                 $pro_img[$i]
-                <p>価格:{$pro_price[$i]}</p>
+                <p>価格:{$pro_price[$i]}円</p>
+                <input type='number' name='pro_count{$i}'  min='0' step='1' value={$pro_count[$i]}>
                 EOM;
             }
+            echo "<input type='hidden' name='max' value=$max>";
+            echo "<br><input type='submit' value='数量変更' ><br>";
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();
         }
     ?>
     <input type="button" onclick="history.back()" value = "戻る">
+    </form>
 </body>
 </html>
