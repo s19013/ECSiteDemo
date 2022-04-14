@@ -64,7 +64,7 @@
                 <p>商品名:{$pro_name[$i]}</p>
                 $pro_img[$i]
                 <p>価格:{$pro_price[$i]}円</p>
-                <input type='number' name='pro_count{$i}'  min='0' step='1' value={$pro_count[$i]}>
+                <input type='number' name='pro_count{$i}'  min='1' max='10' step='1' value={$pro_count[$i]}>
                 <p>合計価格:{$sum}円</p>
                 EOM;
             }

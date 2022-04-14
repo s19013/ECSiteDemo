@@ -13,22 +13,32 @@
     session_regenerate_id(true);
 
     require_once('../common/common.php');
-    $post=sanitize($_POST);
-    if (isset($_SESSION['cart'])==true) {
-        $cart=$_SESSION['cart'];
-        $pro_count=$_SESSION['pro_count'];
-        $max=count($cart);
-    } else { $max=0; }
 
-    // $max=$post['max'];
-    // $cart = $_SESSION['cart'];
-    for ($i=0; $i <$max ; $i++) { $pro_count[]=$post["pro_count{$i}"];}
+    $post=sanitize($_POST);
+    $max = $post['max'];
+    $cart= $_SESSION['cart'];
+
+    //個数変更
+    for ($i=0; $i <$max ; $i++)
+    {
+        if (preg_match("/\A[0-9]+\z/",$post["pro_count{$i}"])==0)
+        {
+            echo "<p>数値に誤りがあります</p>";
+            echo "<a href='shop_cartlook.php'>カートに戻る</a>";
+            exit();
+        }
+        $pro_count[]=$post["pro_count{$i}"];
+    }
+
+    //削除処理
     for ($i=$max; 0<=$i; $i--) {
         if (isset($_POST["delete{$i}"])==true) {
             array_splice($cart,$i,1);
             array_splice($pro_count,$i,1);
         }
     }
+
+    //新しくセッションに保存
     $_SESSION['cart']=$cart;
     $_SESSION['pro_count']=$pro_count;
     header('Location:shop_cartlook.php');
