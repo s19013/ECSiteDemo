@@ -26,6 +26,11 @@
             if (isset($_SESSION['cart']) ==true) {
                 $cart=$_SESSION['cart'];
                 $pro_count=$_SESSION['pro_count'];
+                if (in_array($pro_code,$cart)==true) {
+                    echo "<p>その商品はすでにカートに入っています｡</p>";
+                    echo "<a href='shop_list.php'>商品一覧に戻る</a>";
+                    exit();
+                }
             }
             $cart[]=$pro_code;
             $pro_count[]=1;
