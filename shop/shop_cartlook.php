@@ -20,9 +20,19 @@
 <body>
     <?php
         try {
-            $cart=$_SESSION['cart'];
-            $max=count($cart);
-            $pro_count=$_SESSION['pro_count'];
+            if (isset($_SESSION['cart'])==true) {
+                $cart=$_SESSION['cart'];
+                $pro_count=$_SESSION['pro_count'];
+                $max=count($cart);
+            } else { $max=0;}
+
+            if ($max == 0) {
+                echo <<<EOM
+                <p>カートの中は空です</p>
+                <a href="shop_list.php">商品一覧へ戻る</a>
+                EOM;
+                exit();
+            }
 
             $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
             $user = 'root';
@@ -66,7 +76,7 @@
             exit();
         }
     ?>
-    <input type="button" onclick="history.back()" value = "戻る">
+    <a href="shop_list.php">商品一覧へ戻る</a>
     </form>
 </body>
 </html>
