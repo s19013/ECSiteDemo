@@ -32,7 +32,7 @@
     $_SESSION['cart']=$cart;
     $_SESSION['pro_count']=$pro_count;
     header('Location:shop_cartlook.php');
-    exit()
+    exit();
 ?>
 </body>
 </html>
