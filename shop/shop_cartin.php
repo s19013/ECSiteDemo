@@ -8,6 +8,7 @@
         echo "<p>ようこそ{$_SESSION['menber_name']}様</p>";
         echo "<a href='member_logout.php'>ログアウト</a>";
     }
+    
 ?>
 <!DOCTYPE html>
 <html lang="jp">
@@ -22,10 +23,10 @@
         try {
             $pro_code = $_GET['procode'];
 
-            if (isset($_SESSION('cart')) ==true) {$cart[]=$_SESSION['cart'];}
+            if (isset($_SESSION['cart']) ==true) {$cart=$_SESSION['cart'];}
             $cart[]=$pro_code;
             $_SESSION['cart']=$cart;
-
+            
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();
