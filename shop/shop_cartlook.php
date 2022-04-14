@@ -8,7 +8,6 @@
         echo "<p>ようこそ{$_SESSION['menber_name']}様</p>";
         echo "<a href='member_logout.php'>ログアウト</a>";
     }
-    
 ?>
 <!DOCTYPE html>
 <html lang="jp">
@@ -49,13 +48,17 @@
             echo "<p>カート</p>";
             echo "<form method='post' action=pro_count_change.php>";
             for ($i=0; $i <$max; $i++) {
+                $sum = $pro_price[$i] * $pro_count[$i];
                 echo <<<EOM
+                <input type='checkbox' name='delete{$i}'>
                 <p>商品名:{$pro_name[$i]}</p>
                 $pro_img[$i]
                 <p>価格:{$pro_price[$i]}円</p>
                 <input type='number' name='pro_count{$i}'  min='0' step='1' value={$pro_count[$i]}>
+                <p>合計価格:{$sum}円</p>
                 EOM;
             }
+            
             echo "<input type='hidden' name='max' value=$max>";
             echo "<br><input type='submit' value='数量変更' ><br>";
         } catch (Exception $e) {
