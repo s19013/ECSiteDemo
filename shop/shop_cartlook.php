@@ -55,21 +55,38 @@
 
             $dbh = null;
 
-            echo "<p>カート</p>";
-            echo "<form method='post' action=pro_count_change.php>";
+            echo <<<EOM
+            <p>カート</p>
+            <form method='post' action=pro_count_change.php>
+                <table border=1>
+                <tr>
+                    <td>商品</td>
+                    <td>商品画像</td>
+                    <td>価格</td>
+                    <td>数量</td>
+                    <td>小計</td>
+                    <td>削除</td>
+                </tr>
+            EOM;
+
+            $sumAll = 0;
             for ($i=0; $i <$max; $i++) {
                 $sum = $pro_price[$i] * $pro_count[$i];
+                $sumAll=$sum;
                 echo <<<EOM
-                <input type='checkbox' name='delete{$i}'>
-                <p>商品名:{$pro_name[$i]}</p>
-                $pro_img[$i]
-                <p>価格:{$pro_price[$i]}円</p>
-                <input type='number' name='pro_count{$i}'  min='1' max='10' step='1' value={$pro_count[$i]}>
-                <p>合計価格:{$sum}円</p>
+                <tr>
+                    <td>$pro_name[$i]</td>
+                    <td>$pro_img[$i]</td>
+                    <td>{$pro_price[$i]}円</td>
+                    <td><input type='number' name='pro_count{$i}'  min='1' max='10' step='1' value={$pro_count[$i]}></td>
+                    <td>{$sum}円</td>
+                    <td><input type='checkbox' name='delete{$i}'></td>
+                </tr>
                 EOM;
             }
-            
+            echo "</table>";
             echo "<input type='hidden' name='max' value=$max>";
+            echo "<p>{$sumAll}円</p>";
             echo "<br><input type='submit' value='数量変更' ><br>";
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
@@ -77,6 +94,7 @@
         }
     ?>
     <a href="shop_list.php">商品一覧へ戻る</a>
+
     </form>
 </body>
 </html>
