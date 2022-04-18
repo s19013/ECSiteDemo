@@ -93,8 +93,8 @@
             exit();
         }
     ?>
-    <a href="shop_list.php">商品一覧へ戻る</a>
-
     </form>
+    <a href="shop_list.php">商品一覧へ戻る</a>
+    <a href="shop_form.html">購入手続きへ</a>
 </body>
 </html>
