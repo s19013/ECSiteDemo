@@ -14,6 +14,7 @@
     <?php
         try {
             require_once('../common/common.php');
+            require_once('./clear_cart.php');
 
             $post=sanitize($_POST);
 
@@ -60,15 +61,55 @@
                 $stmt -> execute($data);
 
                 $rec = $stmt-> fetch(PDO::FETCH_ASSOC);
-
+                
+                $priceList[] = $rec['price']; //他で使う
                 $shoukei = $rec['price']*$pro_count[$i];
 
                 $honbun .= <<<EOT
                 | {$rec['name']} | {$rec['price']}円 | {$pro_count[$i]}個 | {$shoukei}円 |\n
                 EOT;
             }
-            $dbh = null;
 
+            //2つのテーブルをロック
+            $sql  = 'LOCK TABLES dat_sales WRITE,dat_sales_product write';
+            $stmt = $dbh->prepare($sql);
+            $stmt -> execute();
+            //注文データを保存
+            $sql = "INSERT INTO dat_sales(code__member, name, email, postal1, postal2, address, tel) VALUES (?,?,?,?,?,?,?)";
+            $stmt = $dbh->prepare($sql);
+            $data = array(); //<-これで一度クリアする
+            $data[] = 0 ;//会員登録してないときは0
+            $data[] = $name;
+            $data[] = $email;
+            $data[] = $postal1;
+            $data[] = $postal2;
+            $data[] = $address;
+            $data[] = $tel;
+            $stmt -> execute($data);
+
+            $sql = 'select last_insert_id()';
+            $stmt = $dbh->prepare($sql);
+            $stmt -> execute();
+            $rec = $stmt-> fetch(PDO::FETCH_ASSOC);
+            $lastcode = $rec['last_insert_id()'];
+
+            //注文詳細書き込み
+            for ($i=0; $i <$max ; $i++) {
+                $sql  = 'INSERT INTO dat_sales_product(code_sales, code_product, price, quantity) VALUES (?,?,?,?)';
+                $stmt = $dbh->prepare($sql);
+                $data = array();
+                $data[] = $lastcode;
+                $data[] = $cart[$i];
+                $data[] = $priceList[$i];
+                $data[] = $pro_count[$i];
+                $stmt -> execute($data);
+            }
+
+            $sql = 'unlock table';
+            $stmt = $dbh -> prepare($sql);
+            $stmt -> execute();
+
+            $dbh = null;
             $honbun .= <<<EOT
             -----------------------------\n
             代金は以下の口座にお振込みください\n
@@ -100,8 +141,11 @@
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();
-            
         }
+
+        clear_cart();
     ?>
+    <br>
+    <a href="shop_list.php">商品画面へ</a>
 </body>
 </html>
