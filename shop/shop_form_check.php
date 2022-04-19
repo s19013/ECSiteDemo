@@ -34,7 +34,7 @@
             <p>電話番号:{$tel}</p>
             EOM;
             echo <<<EOM
-            <form action="shop_form_done." method="post">
+            <form action="shop_form_done.php" method="post">
             <input type="hidden" name="name"    value=$name>
             <input type="hidden" name="email"   value=$email>
             <input type="hidden" name="postal1" value=$postal1>
