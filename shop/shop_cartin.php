@@ -3,7 +3,7 @@
     session_regenerate_id(true); //あとでここの1文を抜いたphp文をstaff,productにすべて貼り付ける
     if (isset($_SESSION['menber_login'])==false) {
         echo "<p>ようこそゲスト様</p>";
-        echo "<a href=member_login.html> 会員ログイン </a><br>";
+        echo "<a href=../member/member_login.php> 会員ログイン </a><br>";
     } else {
         echo "<p>ようこそ{$_SESSION['menber_name']}様</p>";
         echo "<a href='member_logout.php'>ログアウト</a>";
