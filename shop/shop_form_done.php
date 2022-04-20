@@ -17,13 +17,19 @@
             require_once('./clear_cart.php');
 
             $post=sanitize($_POST);
-
+            //個人情報
             $name =$post['name'];
             $email=$post['email'];
             $postal1 = $post['postal1'];
             $postal2 = $post['postal2'];
             $address = $post['address'];
             $tel =$post['tel'];
+            //会員登録情報
+            $order =$post['order'];
+            $pass  =$post['pass'];
+            $gender=$post['gender'];
+            $birth =$post['birth'];
+            $lastmembercode = 0;//会員登録してないときは0
 
             $cart=$_SESSION['cart'];
             $pro_count=$_SESSION['pro_count'];
@@ -59,26 +65,48 @@
                 $stmt = $dbh->prepare($sql);
                 $data[0]=$cart[$i];
                 $stmt -> execute($data);
-
                 $rec = $stmt-> fetch(PDO::FETCH_ASSOC);
-                
                 $priceList[] = $rec['price']; //他で使う
                 $shoukei = $rec['price']*$pro_count[$i];
-
                 $honbun .= <<<EOT
                 | {$rec['name']} | {$rec['price']}円 | {$pro_count[$i]}個 | {$shoukei}円 |\n
                 EOT;
             }
 
             //2つのテーブルをロック
-            $sql  = 'LOCK TABLES dat_sales WRITE,dat_sales_product write';
+            $sql  = 'LOCK TABLES dat_sales WRITE,dat_sales_product write,dat_member write';
             $stmt = $dbh->prepare($sql);
             $stmt -> execute();
+
+            //会員登録情報があったら会員登録を保存
+            if ($order == 'order_join_member') {
+                $sql = "INSERT INTO dat_member(password, name, email, postal1, postal2, address, tel, gender, born) VALUES (?,?,?,?,?,?,?,?,?)";
+                $stmt = $dbh->prepare($sql);
+                $data =array();
+                $data[] = md5($pass);
+                $data[] = $name;
+                $data[] = $email;
+                $data[] = $postal1;
+                $data[] = $postal2;
+                $data[] = $address;
+                $data[] = $tel;
+                // 性別
+                if ($gender == 'male') {$data[] = 1;}
+                else {$data[] = 2;}
+                $data[] = $birth;
+                $stmt -> execute($data);
+
+                $sql = 'select last_insert_id()';
+                $stmt = $dbh->prepare($sql);
+                $stmt -> execute();
+                $rec = $stmt-> fetch(PDO::FETCH_ASSOC);
+                $lastmembercode = $rec['last_insert_id()'];//注文データ保存の時に使う
+            }
             //注文データを保存
             $sql = "INSERT INTO dat_sales(code__member, name, email, postal1, postal2, address, tel) VALUES (?,?,?,?,?,?,?)";
             $stmt = $dbh->prepare($sql);
             $data = array(); //<-これで一度クリアする
-            $data[] = 0 ;//会員登録してないときは0
+            $data[] = $lastmembercode ;
             $data[] = $name;
             $data[] = $email;
             $data[] = $postal1;
