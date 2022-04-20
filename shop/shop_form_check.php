@@ -39,8 +39,9 @@
                 $okFlag=false;
             }
             echo "<p>性別:";
-            if ($gender = 'male') {echo "男性</p>";}
-            else {echo "女性</p>";}
+            if ($gender = 'male') {echo "男性";}
+            else {echo "女性";}
+            echo "</p>";
             echo "<p>生まれ年:{$birth}年代</p>";
         }
 
