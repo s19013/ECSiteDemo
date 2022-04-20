@@ -41,15 +41,6 @@
             $dbh = new PDO($dsn,$user,$password);
             $dbh -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
-            echo<<<EOM
-            <p>{$name}様</p>
-            <p>ご注文ありがとうございました</p>
-            <p>{$email}にメールを送りましたのでご確認ください</p>
-            <p>商品は以下の住所に発送します</p>
-            <p>{$postal1}-{$postal2}</p>
-            <p>{$address}</p>
-            EOM;
-
             //顧客用メールの本文作成
             $honbun =" " ;//初期化
             $honbun = <<<EOT
@@ -60,7 +51,7 @@
             -----------------------------\n
             EOT;
 
-            for ($i=0; $i <$max ; $i++) { 
+            for ($i=0; $i <$max ; $i++) {
                 $sql = "SELECT * FROM mst_product WHERE code=?";
                 $stmt = $dbh->prepare($sql);
                 $data[0]=$cart[$i];
@@ -166,6 +157,24 @@
             mb_language('Japanese');
             mb_internal_encoding('UTF-8');
             mb_send_mail("info@rokumarunouen.co.jp",$title,$honbun,$header);
+
+        //html作成
+        echo<<<EOM
+        <p>{$name}様</p>
+        <p>ご注文ありがとうございました</p>
+        <p>{$email}にメールを送りましたのでご確認ください</p>
+        <p>商品は以下の住所に発送します</p>
+        <p>{$postal1}-{$postal2}</p>
+        <p>{$address}</p>
+        EOM;
+
+        if ($order == 'order_join_member') {
+            echo <<< EOM
+            <p>会員登録が完了しました</p>
+            <p>次回からメールアドレスとパスワードでログインしてください</p>
+            <p>ご注文が簡単にできるようになります</p>
+            EOM;
+        }
         } catch (Exception $e) {
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();
@@ -174,6 +183,7 @@
         clear_cart();
     ?>
     <br>
+    
     <a href="shop_list.php">商品画面へ</a>
 </body>
 </html>
