@@ -7,11 +7,17 @@
 
         return $after;
     }
+
     function pulldown_year()
     {
         echo "<select name='year' id=''>";
         for ($i=18; $i <=22 ; $i++) { echo "<option value=20{$i}>20$i</option>";}
         echo "</select>";
+    }
+
+    function pulldown_year_shop_from()
+    {
+        for ($i=1910; $i <=2010 ; $i+=10) { echo "<option value={$i}>{$i}年代</option>";}
     }
 
     function pulldown_month()

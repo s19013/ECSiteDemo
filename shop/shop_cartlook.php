@@ -95,7 +95,7 @@
     ?>
     </form>
     <a href="shop_list.php">商品一覧へ戻る</a>
-    <a href="shop_form.html">購入手続きへ</a>
+    <a href="shop_form.php">購入手続きへ</a>
     <a href='clear_cart.php?name=true'>カートを空にする</a>
 
 </body>
