@@ -7,10 +7,13 @@
     <title>Document</title>
 </head>
 <body>
-    <p>メールアドレス</p>
-    <input type="text" name="email" id="">
-    <p>パスワード</p>
-    <input type="password" name="pass" id="">
-    <input type="submit" value="ログイン">
+    <form action="member_login_check.php" method="post">
+        <p>メールアドレス</p>
+        <input type="text" name="email" id="">
+        <p>パスワード</p>
+        <input type="password" name="pass" id="">
+        <input type="submit" value="ログイン">
+    </form>
+    
 </body>
 </html>
