@@ -96,6 +96,9 @@
     </form>
     <a href="shop_list.php">商品一覧へ戻る</a>
     <a href="shop_form.php">購入手続きへ</a>
+    <?php
+        if (isset($_SESSION["member_login"])==true) {echo "<a href='shop_easy_check.php'>会員かんたん注文へ進む</a>";}
+    ?>
     <a href='clear_cart.php?name=true'>カートを空にする</a>
 
 </body>
