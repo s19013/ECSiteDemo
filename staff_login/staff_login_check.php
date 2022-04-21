@@ -31,7 +31,7 @@
 
             $dbh = null; //データベースから切断
 
-            $rec = $stmt -> fetch(PDO::FETCH_ASSOC);
+            $rec = $stmt -> fetch(PDO::FETCH_ASSOC);//取ってきたデータを連想配列でrecに保存
 
             if ($rec==false) {
                 echo "<p>スタッフコードかパスワードが間違えています</p>";
