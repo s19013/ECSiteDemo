@@ -13,38 +13,39 @@
     <?php
         try {
             $post = sanitize($_POST);
-            $staff_code = $post['code'];
-            $staff_pass = $post['pass'];
+            $member_email = $post['email'];
+            $member_pass  = $post['pass'];
 
-            $staff_pass = md5($staff_pass);
+            $member_pass = md5($member_pass);
 
             $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
             $user = 'root';
             $password = '';
             $dbh = new PDO($dsn,$user,$password);
             $dbh -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-            $sql = "SELECT * FROM mst_staff WHERE code=? AND password=?";
-            $stmt = $dbh -> prepare($sql);
-            $data[] = $staff_code; //一番最初の?に入る
-            $data[] = $staff_pass; //二番目の?に入る
-            $stmt -> execute($data); //dataを?に入れる
+            $sql = "SELECT code,name FROM dat_member WHERE email=? AND password=?";
+            $stmt   = $dbh -> prepare($sql);
+            $data[] = $member_email;
+            $data[] = $member_pass;
+            $stmt -> execute($data);
 
             $dbh = null; //データベースから切断
 
-            $rec = $stmt -> fetch(PDO::FETCH_ASSOC);//取ってきたデータを連想配列でrecに保存
+            $rec = $stmt -> fetch(PDO::FETCH_ASSOC);
 
             if ($rec==false) {
-                echo "<p>スタッフコードかパスワードが間違えています</p>";
-                echo '<a href="staff_login.php"></a>';
+                echo "<p>メールアドレスかパスワードが間違えています</p>";
+                echo '<a href="member_login.php">戻る</a>';
             } else {
                 session_start();
-                $_SESSION['login']=1;
-                $_SESSION['staff_code']=$staff_code;
-                $_SESSION['staff_name']=$rec['name'];
-                header('Location:staff_top.php');
+                $_SESSION['member_login']=1;
+                $_SESSION['member_code'] = $rec['code'];
+                $_SESSION['member_name'] = $rec['name'];
+                header('Location:../shop/shop_list.php');
                 exit();
             }
         } catch (Exception $e) {
+            echo "$e";
             echo 'ただいま障害によりご迷惑をおかけしています｡';
             exit();
         }
