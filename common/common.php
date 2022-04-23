@@ -43,4 +43,12 @@
             return "<a href=../member/member_page.php>マイページ</a>";
         }
     }
+
+    //カートの中の数を数える
+    function countProduct()
+    {
+        if (isset($_SESSION['cart']) == true) {
+            return count($_SESSION['cart']);
+        } else { return 0; }
+    }
 ?>
