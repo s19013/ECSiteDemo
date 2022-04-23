@@ -1,0 +1,25 @@
+.proList{
+    display: flex; /* flexbox */
+	flex-wrap: wrap; /* 折返し指定 */
+    margin: 0 1vmin;
+    justify-content: center;
+
+    .product{
+        width: 16%;
+        margin: 1.2vmin;
+        border: solid;
+    }
+    p{
+        font-size: 3.5vmin;
+        text-align: center;
+        margin: 1vmin 0;
+        font-weight:bolder;
+    }
+    img{
+        height: auto;
+        width: 100%;
+    }
+}
+
+
+

@@ -1,0 +1,33 @@
+@charset "UTF-8";
+.proList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /* flexbox */
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  /* 折返し指定 */
+  margin: 0 1vmin;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.proList .product {
+  width: 16%;
+  margin: 1.2vmin;
+  border: solid;
+}
+
+.proList p {
+  font-size: 3.5vmin;
+  text-align: center;
+  margin: 1vmin 0;
+  font-weight: bolder;
+}
+
+.proList img {
+  height: auto;
+  width: 100%;
+}
+/*# sourceMappingURL=shop_list.css.map */
