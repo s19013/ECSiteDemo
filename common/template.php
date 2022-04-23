@@ -9,4 +9,17 @@
         </header>
         EOM;
     }
+
+    function oftenUseHeadInf(){
+        echo <<<EOM
+        <!-- css -->
+        <link rel="stylesheet" href="../scss/shop_css/shop_header.css">
+
+        <!-- google webフォント -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <!-- mochipopFont -->
+        <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+        EOM;
+    }
 ?>
