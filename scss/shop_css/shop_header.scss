@@ -6,16 +6,18 @@ header{
     background-color: rgba(224, 255, 173, 0.9);
 
     p{
-        font-size: large;
+        font-size: 3vmin;
         margin: auto;
         grid-column:1 / 2;
         font-family: 'Mochiy Pop One', sans-serif;
     }
     a{
+        font-size: 2vmin;
         margin: auto;
         grid-column:3 / 4;
     }
     button{
+        font-size: 2vmin;
         margin: 5% 10%;
         grid-column:4;
     }
