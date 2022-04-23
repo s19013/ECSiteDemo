@@ -1,0 +1,32 @@
+header {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 20% 1fr 20% 20%;
+      grid-template-columns: 20% 1fr 20% 20%;
+  width: 100%;
+  height: auto;
+  background-color: rgba(224, 255, 173, 0.9);
+}
+
+header p {
+  font-size: large;
+  margin: auto;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 1;
+  grid-column: 1 / 2;
+  font-family: 'Mochiy Pop One', sans-serif;
+}
+
+header a {
+  margin: auto;
+  -ms-grid-column: 3;
+  -ms-grid-column-span: 1;
+  grid-column: 3 / 4;
+}
+
+header button {
+  margin: 5% 10%;
+  -ms-grid-column: 4;
+  grid-column: 4;
+}
+/*# sourceMappingURL=shop_header.css.map */
