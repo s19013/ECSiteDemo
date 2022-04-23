@@ -19,10 +19,7 @@
 
         public function disconnectDB()
         {
-            $this->dsn  =null;
             $this->dbh  =null;
-            $this->user =null;
-            $this->stmt =null;
         }
 
         public function actSql($sql,$data)
