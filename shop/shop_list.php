@@ -1,12 +1,12 @@
 <?php
+    $myPageLinkOrSuggestLogin=null;
     session_start();
-    session_regenerate_id(true); //あとでここの1文を抜いたphp文をstaff,productにすべて貼り付ける
+    session_regenerate_id(true);
     if (isset($_SESSION['member_login'])==false) {
-        echo "<p>ようこそゲスト様</p>";
-        echo "<a href=../member/member_login.php> 会員ログイン </a><br>";
+        
+        $myPageLinkOrSuggestLogin="<a href=../member/member_login.php>ログイン or 会員登録</a>";
     } else {
-        echo "<p>ようこそ{$_SESSION['member_name']}様</p>";
-        echo "<a href='../member/member_logout.php'>ログアウト</a>";
+        $myPageLinkOrSuggestLogin="<p onclick=location.href=../member/member_page.php>マイページ</p>";
     }
 ?>
 <!DOCTYPE html>
@@ -16,8 +16,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="shoplist.css">
 </head>
 <body>
+    <header>
+        <p>ろくまる農園</p>
+        <?php echo $myPageLinkOrSuggestLogin; ?>
+        <button onclick="location.href='./shop_cartlook.php'"><?php?>カート</button>
+    </header>
     <?php
         try {
             $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
