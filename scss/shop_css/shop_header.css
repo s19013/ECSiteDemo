@@ -23,6 +23,7 @@ header a {
   -ms-grid-column: 3;
   -ms-grid-column-span: 1;
   grid-column: 3 / 4;
+  word-wrap: break-word;
 }
 
 header button {
