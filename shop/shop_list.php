@@ -38,6 +38,7 @@
         }
     }
 ?>
+
 <!DOCTYPE html>
 <html lang="jp">
 <head>
@@ -47,19 +48,13 @@
     <title>Document</title>
     <!-- css -->
     <link rel="stylesheet" href="../scss/shop_css/shop_list.css">
-    <link rel="stylesheet" href="../scss/shop_css/shop_header.css">
-
-    <!-- google webフォント -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- mochipopFont -->
-    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+    <?php oftenUseHeadInf();?>
 </head>
 <body>
-    <?php headerTemp($myPageLinkOrSuggestLogin,0); ?>
+    <?php headerTemp($myPageLinkOrSuggestLogin,countProduct()); ?>
     <h1>商品一覧</h1>
     <div class="proList">
-        <?php showProduct()?>
+        <?php showProduct();?>
     </div>
 </body>
 </html>
