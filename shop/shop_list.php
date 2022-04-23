@@ -1,6 +1,7 @@
 <?php
     require_once("../common/DB.php");
     $myPageLinkOrSuggestLogin=null;
+    $DB = new DB();
     session_start();
     session_regenerate_id(true);
     if (isset($_SESSION['member_login'])==false) {
@@ -9,31 +10,31 @@
         $myPageLinkOrSuggestLogin="<p onclick=location.href='../member/member_page.php'>マイページ</p>";
     }
 
+    try {
+        //データベースからデータを取って来る
+        $DB->connectDB();
+        $sql = 'SELECT * FROM mst_product WHERE 1';
+        $DB->actSql($sql,null);
+        //切断
+        $DB->disconnectDB();
+    } catch (Exception $e) {
+        echo $e;
+        echo 'ただいま障害によりご迷惑をおかけしています｡';
+        exit();
+    }
+
     function showProduct(){
-        try {
-            //データベース空データを取って来る
-            $DB = new DB();
-            $DB->connectDB();
-            $sql = 'SELECT * FROM mst_product WHERE 1';
-            $DB->actSql($sql,null);
-            //切断
-            $DB->disconnectDB();
-            while (true) {
-                $rec = $DB->getResult();
-                if ($rec == false) {break;}
-                $pro_img_name= $rec['img'];
-                echo <<< EOM
-                <div class="product" onclick=location.href='shop_product.php?procode={$rec['code']}'>
-                    <p>{$rec['name']}</p>
-                    <img src=../img/yasai/{$pro_img_name}>
-                    <p>{$rec['price']}円</p>
-                </div>
-                EOM;
-            }
-        } catch (Exception $e) {
-            echo $e;
-            echo 'ただいま障害によりご迷惑をおかけしています｡';
-            exit();
+        while (true) {
+            $rec = $GLOBALS['DB']->getResult(); //こうしないと関数の外の変数を使えないらしい
+            if ($rec == false) {break;}
+            $pro_img_name= $rec['img'];
+            echo <<< EOM
+            <div class="product" onclick=location.href='shop_product.php?procode={$rec['code']}'>
+                <p>{$rec['name']}</p>
+                <img src=../img/yasai/{$pro_img_name}>
+                <p>{$rec['price']}円</p>
+            </div>
+            EOM;
         }
     }
 ?>
