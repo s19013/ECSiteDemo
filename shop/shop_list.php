@@ -1,14 +1,14 @@
 <?php
     require_once("../common/DB.php");
+    require_once("../common/common.php");
+    require_once("../common/template.php");
+
     $myPageLinkOrSuggestLogin=null;
     $DB = new DB();
+
     session_start();
     session_regenerate_id(true);
-    if (isset($_SESSION['member_login'])==false) {
-        $myPageLinkOrSuggestLogin="<a href=../member/member_login.php>ログイン or 会員登録</a>";
-    } else {
-        $myPageLinkOrSuggestLogin="<p onclick=location.href='../member/member_page.php'>マイページ</p>";
-    }
+    $myPageLinkOrSuggestLogin=checkLoginSession();
 
     try {
         //データベースからデータを取って来る
@@ -56,17 +56,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-    <p>ろくまる農園</p>
-    <?php echo $myPageLinkOrSuggestLogin; ?>
-    <button onclick="location.href='./shop_cartlook.php'"><?php?>カート</button>
-    </header>
+    <?php headerTemp($myPageLinkOrSuggestLogin,0); ?>
     <h1>商品一覧</h1>
     <div class="proList">
         <?php showProduct()?>
     </div>
-    
-
-    
 </body>
 </html>
