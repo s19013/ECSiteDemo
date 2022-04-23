@@ -33,4 +33,14 @@
         for ($i=1; $i <=31 ; $i++) { echo "<option value={$i}>$i</option>";}
         echo "</select>";
     }
+
+    //ログインしているか確認
+    function checkLoginSession()
+    {
+        if (isset($_SESSION['member_login'])==false) {
+            return "<a href=../member/member_login.php>ログイン or 会員登録</a>";
+        } else {
+            return "<a href=../member/member_page.php>マイページ</a>";
+        }
+    }
 ?>
