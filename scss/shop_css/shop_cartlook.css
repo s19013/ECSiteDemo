@@ -1,0 +1,13 @@
+table {
+  margin: auto;
+  width: 80%;
+}
+
+table td {
+  margin: auto;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+}
+/*# sourceMappingURL=shop_cartlook.css.map */
