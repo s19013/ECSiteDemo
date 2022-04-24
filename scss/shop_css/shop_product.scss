@@ -1,0 +1,46 @@
+.product{
+    display: grid;
+    grid-template-columns:50% 50%;
+    grid-template-rows:20% 20% 20% 20% 20%;
+
+    img{
+        margin: 1vmin auto;
+        grid-column:1/2 ;
+        grid-row:1/6 ;
+        width: 50%;
+    }
+
+    .name{
+        margin: auto 0;
+        text-align: left;
+        font-size: 4vmin;
+        grid-column:2/3 ;
+        grid-row:1/2 ;
+    }
+    .price{
+        margin: auto 0;
+        text-align: left;
+        font-size: 3vmin;
+        grid-column:2/3 ;
+        grid-row:2/3 ;
+    }
+
+    form{
+        display: flex;
+        grid-column:2/3 ;
+        grid-row:5/6 ;
+
+        input{
+            // width: 30%;
+            margin: 0 2vmin 0 0;
+        }
+        
+        .cartIn{
+            width: 30%;
+            // margin: auto auto auto 1vmin;
+            word-wrap: break-word;
+        }
+    }
+
+    
+}

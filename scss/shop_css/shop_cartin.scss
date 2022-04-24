@@ -1,0 +1,23 @@
+.contaner{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5% 5%;
+    align-items: center;
+    justify-content: center;
+    
+
+    img{
+        // width: 50%;
+        // height: auto;
+        
+    }
+    p{
+        // width: 50%;
+        text-align: center;
+        margin: auto 0;
+        // height: auto;
+        word-wrap: break-word;
+    }
+
+    
+}

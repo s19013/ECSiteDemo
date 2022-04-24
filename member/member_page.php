@@ -7,6 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    なにもないよ
+    <a href="member_logout.php">logout</a>
 </body>
 </html>
