@@ -25,12 +25,22 @@
         grid-row:2/3 ;
     }
 
-    .cartIn{
-        width: 30vmin;
-        height: auto;
+    form{
+        display: flex;
         grid-column:2/3 ;
-        grid-row:4/5 ;
-        word-wrap: break-word;
-        margin: 0;
+        grid-row:5/6 ;
+
+        input{
+            // width: 30%;
+            margin: 0 2vmin 0 0;
+        }
+        
+        .cartIn{
+            width: 30%;
+            // margin: auto auto auto 1vmin;
+            word-wrap: break-word;
+        }
     }
+
+    
 }
