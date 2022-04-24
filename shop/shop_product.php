@@ -6,6 +6,8 @@
     $pro_code = $_GET['procode'];
     $DB = new DB();
     $nextURl=null;
+    $hiddenInputValue=null;
+    $html=null;
 
     session_start();
     session_regenerate_id(true);
@@ -34,10 +36,16 @@
 
         if ($pro_img_name == '') {$disp_img ="<img src='https://placehold.jp/150x150.png'>";}
         else {$disp_img = "<img src=../img/yasai/{$pro_img_name} >";}
-        $GLOBALS['nextURl'] ="location.href='shop_cartin.php?procode={$GLOBALS['pro_code']}&img={$pro_img_name}'";
+        // $GLOBALS['nextURl'] ="location.href='shop_cartin.php?procode={$GLOBALS['pro_code']}&img={$pro_img_name}'";
 
-        echo <<<EOM
-        <p class="name">商品名:{$pro_name}</p>
+        $GLOBALS['hiddenInputValue']=<<<EOM
+        <input type="hidden" name="procode" value="{$pro_name}">
+        <input type="hidden" name="img" value="{$pro_img_name}">
+        EOM;
+
+
+        $GLOBALS['html']=<<<EOM
+        <p class="name">{$pro_name}</p>
         <p class="price">価格(税抜き):{$pro_price}円</p>
         $disp_img
         EOM;
@@ -55,12 +63,18 @@
 </head>
 <body>
     <?php headerTemp($myPageLinkOrSuggestLogin,countProduct())?>
+    <?php setDetail();?>
     <h1>商品情報</h1>
     <div class="product">
-        <?php setDetail();?>
-        <button  type="button" onclick=<?php echo $nextURl?> class="cartIn">
+        <?php echo $html?>
+        <form action="./shop_cartin.php" method="post">
+            <?php echo $hiddenInputValue?>
+            <input type="number" name="count" min=1 max=10 value=1>
+            <button type="submit">カートに入れる</button>
+        </form>
+        <!-- <button  type="button" onclick=<?php echo $nextURl?> class="cartIn">
         カートに入れる
-        </button>
+        </button> -->
     </div>
 
     <button onclick="history.back()" class="back">戻る</button>
