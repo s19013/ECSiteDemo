@@ -17,16 +17,11 @@
     $post=sanitize($_POST);
     $max = $post['max'];
     $cart= $_SESSION['cart'];
+    $pro_count=null;
 
     //個数変更
     for ($i=0; $i <$max ; $i++)
     {
-        if (preg_match("/\A[0-9]+\z/",$post["pro_count{$i}"])==0)
-        {
-            echo "<p>数値に誤りがあります</p>";
-            echo "<a href='shop_cartlook.php'>カートに戻る</a>";
-            exit();
-        }
         $pro_count[]=$post["pro_count{$i}"];
     }
 

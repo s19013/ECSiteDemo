@@ -14,6 +14,7 @@
 
     $myPageLinkOrSuggestLogin=checkLoginSession();
 
+    //データベースに接続
     try {
         //データベースからデータを取って来る
         $DB->connectDB();
@@ -27,29 +28,24 @@
         exit();
     }
 
-    function setDetail()
-    {
-        $rec = $GLOBALS['DB']->getResult();
-        $pro_name  = $rec['name'];
-        $pro_price = $rec['price'];
-        $pro_img_name= $rec['img'];
+    $rec = $DB->getResult();
+    $pro_name  = $rec['name'];
+    $pro_price = $rec['price'];
+    $pro_img_name= $rec['img'];
 
-        if ($pro_img_name == '') {$disp_img ="<img src='https://placehold.jp/150x150.png'>";}
-        else {$disp_img = "<img src=../img/yasai/{$pro_img_name} >";}
-        // $GLOBALS['nextURl'] ="location.href='shop_cartin.php?procode={$GLOBALS['pro_code']}&img={$pro_img_name}'";
+    if ($pro_img_name == '') {$disp_img ="<img src='https://placehold.jp/150x150.png'>";}
+    else {$disp_img = "<img src=../img/yasai/{$pro_img_name} >";}
 
-        $GLOBALS['hiddenInputValue']=<<<EOM
-        <input type="hidden" name="procode" value="{$pro_name}">
-        <input type="hidden" name="img" value="{$pro_img_name}">
-        EOM;
+    $hiddenInputValue=<<<EOM
+    <input type="hidden" name="procode" value="{$pro_code}">
+    <input type="hidden" name="img" value="{$pro_img_name}">
+    EOM;
 
-
-        $GLOBALS['html']=<<<EOM
-        <p class="name">{$pro_name}</p>
-        <p class="price">価格(税抜き):{$pro_price}円</p>
-        $disp_img
-        EOM;
-    }
+    $html=<<<EOM
+    <p class="name">{$pro_name}</p>
+    <p class="price">価格(税抜き):{$pro_price}円</p>
+    $disp_img
+    EOM;
 ?>
 <!DOCTYPE html>
 <html lang="jp">
@@ -63,7 +59,6 @@
 </head>
 <body>
     <?php headerTemp($myPageLinkOrSuggestLogin,countProduct())?>
-    <?php setDetail();?>
     <h1>商品情報</h1>
     <div class="product">
         <?php echo $html?>
