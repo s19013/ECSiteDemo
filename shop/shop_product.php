@@ -1,12 +1,46 @@
 <?php
+    require_once("../common/DB.php");
+    require_once("../common/common.php");
+    require_once("../common/template.php");
+    $myPageLinkOrSuggestLogin=null;
+    $pro_code = $_GET['procode'];
+    $DB = new DB();
+    $nextURl=null;
+
     session_start();
-    session_regenerate_id(true); //あとでここの1文を抜いたphp文をstaff,productにすべて貼り付ける
-    if (isset($_SESSION['member_login'])==false) {
-        echo "<p>ようこそゲスト様</p>";
-        echo "<a href=../member/member_login.php> 会員ログイン </a><br>";
-    } else {
-        echo "<p>ようこそ{$_SESSION['member_name']}様</p>";
-        echo "<a href='../member/member_logout.php'>ログアウト</a>";
+    session_regenerate_id(true);
+
+    $myPageLinkOrSuggestLogin=checkLoginSession();
+
+    try {
+        //データベースからデータを取って来る
+        $DB->connectDB();
+        $sql = "select * from mst_product where code={$pro_code}";
+        $DB->actSql($sql,null);
+        //切断
+        $DB->disconnectDB();
+    } catch (Exception $e) {
+        echo $e;
+        echo 'ただいま障害によりご迷惑をおかけしています｡';
+        exit();
+    }
+
+    function setDetail()
+    {
+        $rec = $GLOBALS['DB']->getResult();
+        $pro_name  = $rec['name'];
+        $pro_price = $rec['price'];
+        $pro_img_name= $rec['img'];
+
+        if ($pro_img_name == '') {$disp_img ="<img src='https://placehold.jp/150x150.png'>";}
+        else {$disp_img = "<img src=../img/yasai/{$pro_img_name} >";}
+        $GLOBALS['nextURl'] ="location.href='shop_cartin.php?procode={$GLOBALS['pro_code']}&img={$pro_img_name}'";
+
+        echo <<<EOM
+        <p class="name">商品名:{$pro_name}</p>
+        <p class="price">価格(税抜き):{$pro_price}円</p>
+        $disp_img
+        EOM;
     }
 ?>
 <!DOCTYPE html>
@@ -16,47 +50,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../scss/shop_css/shop_product.css">
+    <?php oftenUseHeadInf();?>
 </head>
 <body>
-    <?php
-        try {
-            $pro_code = $_GET['procode'];
+    <?php headerTemp($myPageLinkOrSuggestLogin,countProduct())?>
+    <h1>商品情報</h1>
+    <div class="product">
+        <?php setDetail();?>
+        <button  type="button" onclick=<?php echo $nextURl?> class="cartIn">
+        カートに入れる
+        </button>
+    </div>
 
-            $dsn = 'mysql:dbname=shop;host=localhost;charset=utf8';
-            $user = 'root';
-            $password = '';
-            $dbh = new PDO($dsn,$user,$password);
-            $dbh -> setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    <button onclick="history.back()" class="back">戻る</button>
 
-            $sql = 'select * from mst_product where code=?';
-            $stmt = $dbh ->prepare($sql);
-            $data[] = $pro_code;
-            $stmt -> execute($data);
-
-            $rec = $stmt->fetch(PDO::FETCH_ASSOC);
-            $pro_name  = $rec['name'];
-            $pro_price = $rec['price'];
-            $pro_img_name= $rec['img'];
-
-            $dbh = null;
-
-            if ($pro_img_name == '') {$disp_img ='';} 
-            else {$disp_img = "<img src=../img/yasai/{$pro_img_name} >";}
-        } catch (Exception $e) {
-            echo 'ただいま障害によりご迷惑をおかけしています｡';
-            exit();
-        }
-
-        echo <<<EOM
-        <a href='shop_cartin.php?procode={$pro_code}'>カートに入れる</a><br>
-        <p>商品情報</p>
-        <p>商品コード:{$pro_code}</p>
-        <p>商品名:{$pro_name}</p>
-        <p>価格:{$pro_price}</p>
-        $disp_img
-        <input type="button" onclick="history.back()" value = "戻る">
-        EOM;
-    ?>
-    
 </body>
 </html>
