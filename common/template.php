@@ -5,7 +5,7 @@
         <header>
             <p>ろくまる農園</p>
             $myPageLinkOrSuggestLogin
-            <button onclick="location.href='./shop_cartlook.php'"> $countOfProduct カート</button>
+            <button onclick="location.href='./shop_cartlook.php'"> カート($countOfProduct)</button>
         </header>
         EOM;
     }
